@@ -53,7 +53,27 @@ const puzzles=[
 {answer:'São Paulo',scores:{Brasil:91,cidade:74,estado:83,avenida:54,capital:70,paulista:88,metrópole:63,'Minas Gerais':34},clues:['Sou um lugar muito populoso do Brasil.','Meu nome é compartilhado por um estado e sua capital.','Sou a maior cidade brasileira, com o mesmo nome do estado onde fico.']},
 {answer:'Minas Gerais',scores:{Brasil:87,estado:76,montanha:39,ouro:58,'Belo Horizonte':89,paulista:22,café:43,interior:52},clues:['Sou um estado brasileiro conhecido por montanhas e cidades históricas.','Meu nome lembra uma atividade importante na história do Brasil.','Meu nome tem duas palavras: uma indica recursos e outra uma região ampla.']}]}
 ];
-const tipRequirements=[{total:30,since:0},{total:90,since:40},{total:180,since:60}],dailyTipLimit=7,categoryTipLimit=3,storageKey='palavra-secreta-tabs-v1';
+const extraScores={
+'biblioteca':{'bibliotecário':72,'bibliotecária':72,'estudo':55,'empréstimo':66,'estudante':42,'livros':86,'prateleira':74,'silêncio':38,'catálogo':81,'leitor':77},
+'amizade':{'amizades':95,'companheiro':88,'companheira':88,'parceria':84,'relação':57,'união':65,'apoio':72,'amizade verdadeira':90,'colega de trabalho':49,'convívio':61},
+'saudade':{'saudades':96,'saudoso':78,'saudosa':78,'falta':84,'lembrar':72,'nostálgico':86,'nostálgica':86,'longe':63,'querido':57,'reminiscência':81},
+'felino':{'felinos':96,'gato selvagem':91,'jaguar':89,'onça':90,'puma':87,'lince':89,'leopardo':92,'garras':51,'predador':68,'bigodes':54},
+'aracnídeo':{'aracnídeos':97,'aracnídea':94,'aranhas':91,'escorpiões':88,'oito patas':81,'invertebrado':66,'invertebrados':68,'teia de aranha':85,'venenoso':52,'venenosa':52},
+'canino':{'caninos':96,'cães':93,'cachorros':91,'cachorra':88,'raposas':77,'lobos':94,'lobo-guará':88,'família':52,'focinho':64,'matilha':77},
+'tomate':{'tomates':96,'tomatinho':90,'tomateiro':84,'ketchup':76,'extrato':62,'polpa':73,'hortaliça':68,'hortaliças':68,'fruto':53,'molho de tomate':90},
+'canela':{'canela em pó':96,'canela em pau':94,'pau de canela':93,'aromatizante':74,'condimento':84,'condimentos':84,'biscoito':49,'bolo':55,'chocolate':40,'açúcar mascavo':61},
+'pé de moleque':{'pé-de-moleque':96,'pé de moleques':95,'doce de amendoim':94,'amendoim torrado':87,'rapadura':82,'festa junina':91,'arraial':71,'paçoca':90,'cristalizado':50,'doce brasileiro':84},
+'vulcão':{'vulcões':96,'magma':95,'magma terrestre':87,'vulcânico':84,'vulcânica':84,'vulcanismo':92,'montanha de fogo':90,'gases':53,'erupções':97,'rocha derretida':91},
+'cachoeira':{'cachoeiras':96,'cascata':94,'cascatas':94,'queda d’água':95,'queda d\'água':95,'salto':75,'rio':61,'rio caudaloso':68,'água corrente':78,'cânion':53},
+'aurora':{'aurora boreal':98,'aurora austral':97,'auroras':96,'luzes do norte':92,'luzes polares':95,'magnetosfera':59,'polo norte':67,'polo sul':62,'fenômeno luminoso':79,'céu colorido':68},
+'bússola':{'bússolas':96,'bússola magnética':97,'bússola de navegação':96,'orientar':77,'navegador':59,'pontos cardeais':82,'ponto cardeal':78,'nordeste':62,'cartografia':71,'instrumento':42},
+'guarda-chuva':{'guarda-chuvas':96,'guarda chuva':95,'sombrinha':91,'capa de chuva':83,'impermeável':68,'molhar':55,'temporal':63,'proteção contra chuva':87,'abrigo':42,'pingos':39},
+'caixa d\'água':{'caixa de água':97,'caixas d\'água':96,'reservatório de água':98,'tanque':85,'tanque de água':94,'abastecimento':74,'encanamento':89,'cisterna':76,'hidrômetro':43,'torneira':61},
+'farol':{'faróis':96,'farol marítimo':96,'farol costeiro':91,'farol de navegação':95,'sinal luminoso':85,'sinalização':66,'navegar':71,'marinheiro':50,'litoral':79,'feixe de luz':88},
+'São Paulo':{'sao paulo':100,'capital paulista':96,'cidade de são paulo':99,'estado de são paulo':94,'paulistanos':85,'paulistanas':85,'sudeste':63,'avenida paulista':95,'brasil':74,'metropolitana':66},
+'Minas Gerais':{'minas gerais':100,'mineiro':93,'mineira':93,'mineiros':93,'mineiras':93,'estado mineiro':94,'belo horizonte':91,'ouro preto':88,'mineração':84,'mineração de ouro':89,'sudeste':58}
+};
+puzzles.forEach(category=>category.rounds.forEach(round=>Object.assign(round.scores,extraScores[round.answer]||{})));const tipRequirements=[{total:30,since:0},{total:90,since:40},{total:180,since:60}],dailyTipLimit=7,categoryTipLimit=3,storageKey='palavra-secreta-tabs-v1';
 const el={categories:document.querySelector('#categories'),roundTabs:document.querySelector('#roundTabs'),description:document.querySelector('#description'),form:document.querySelector('#form'),input:document.querySelector('#guess'),submit:document.querySelector('#form button[type="submit"]'),hint:document.querySelector('#hintButton'),hintBalance:document.querySelector('#hintBalance'),attempts:document.querySelector('#attempts'),clues:document.querySelector('#clues'),guesses:document.querySelector('#guesses'),toast:document.querySelector('#toast')};
 const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
 const blankDay=()=>({date:today(),tips:dailyTipLimit,spent:0,correctsSinceSpend:0,categories:{}});
@@ -78,5 +98,6 @@ renderCategories();selectCategory(0);
 </script>
 </body>
 </html>
+
 
 
