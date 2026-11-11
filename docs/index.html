@@ -27,74 +27,139 @@
 </main>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
-const puzzles=[
-{name:'Palavra',description:'Descubra palavras de diferentes assuntos por associação de significado.',rounds:[
-{answer:'biblioteca',scores:{livro:75,leitura:82,escola:61,estante:78,livraria:89,conhecimento:53,prédio:30,arquivo:69},clues:['Guardo muitas histórias, mas não sou uma pessoa.','Você pode me visitar em silêncio e sair levando uma aventura.','Meus corredores guardam livros para emprestar.']},
-{answer:'amizade',scores:{amigo:94,carinho:68,confiança:82,companheirismo:91,afeto:70,lealdade:76,amor:52,colega:61},clues:['Não sou objeto, mas posso ser construído entre pessoas.','Cresço com confiança, cuidado e tempo.','É o laço especial que une bons amigos.']},
-{answer:'saudade',scores:{nostalgia:94,lembrança:72,memória:65,ausência:83,passado:58,distância:42,recordação:77,saudosismo:91},clues:['Sou um sentimento que costuma olhar para trás.','Posso aparecer quando alguém ou algo querido está longe.','Meu nome descreve a falta que sentimos de algo ou alguém.']}]},
-{name:'Animal',description:'As respostas podem ser espécies ou grupos de animais, como felinos, caninos e aracnídeos.',rounds:[
-{answer:'felino',scores:{gato:86,leão:92,tigre:91,'gato doméstico':80,pantera:95,garra:49,canino:24,mamífero:58},clues:['Sou uma família de caçadores com garras retráteis em muitas espécies.','Leões, tigres e gatos pertencem ao meu grupo.','A palavra que procuro nomeia um membro da família dos gatos.']},
-{answer:'aracnídeo',scores:{aranha:93,escorpião:89,tarântula:94,teia:61,inseto:20,oito:45,ácaro:83,caranguejo:17},clues:['Tenho parentes que podem ter oito patas.','Aranhas e escorpiões fazem parte do meu grupo.','Sou a classe animal a que pertencem as aranhas.']},
-{answer:'canino',scores:{cachorro:90,lobo:92,raposa:75,cão:91,latido:57,felino:23,matilha:67,mamífero:44},clues:['Muitos de nós vivem em matilhas ou perto das pessoas.','Lobos, raposas e cães são meus parentes.','Sou o grupo zoológico dos cães e seus parentes.']}]},
-{name:'Comida',description:'Ingredientes, frutas, legumes, temperos e pratos podem ser palavras secretas.',rounds:[
-{answer:'tomate',scores:{fruta:43,legume:48,salada:70,molho:83,vermelho:53,cozinha:30,vegetal:49,pizza:62,horta:39,pepino:33},clues:['Sou usado em saladas e também viro molho.','Vermelho por fora, suculento por dentro; botanicamente, sou uma fruta.','Na pizza, muitas vezes apareço transformado em molho.']},
-{answer:'canela',scores:{tempero:81,especiaria:90,doce:62,aroma:70,pau:52,maçã:44,cravo:75,cozinha:31},clues:['Sou um ingrediente aromático usado em pratos doces e salgados.','Posso ser encontrada em pó ou em pau.','Sou a especiaria que costuma acompanhar maçã e arroz-doce.']},
-{answer:'pé de moleque',scores:{amendoim:95,doce:77,açúcar:64,'festa junina':88,paçoca:93,rapadura:82,castanha:58,sobremesa:40},clues:['Sou um doce tradicional brasileiro, crocante e popular em festas.','Meu ingrediente principal costuma ser o amendoim.','Meu nome tem três palavras e termina com “moleque”.']}]},
-{name:'Natureza',description:'Paisagens, plantas, clima e fenômenos naturais fazem parte desta categoria.',rounds:[
-{answer:'vulcão',scores:{lava:91,erupção:95,montanha:72,fogo:56,cinzas:77,ilha:39,terremoto:35,rocha:61,cratera:89,calor:31},clues:['Posso ficar quieto por muito tempo e depois mudar a paisagem.','Do meu interior podem sair fumaça, cinzas e rocha derretida.','Quando entro em erupção, expulso lava pela cratera.']},
-{answer:'cachoeira',scores:{água:75,queda:83,rio:60,rocha:48,corredeira:88,poço:54,chuva:31,natureza:29},clues:['Sou uma paisagem formada por água em movimento.','Um rio pode se precipitar de uma altura e formar uma de mim.','Minha água cai de um desnível entre rochas.']},
-{answer:'aurora',scores:{céu:42,luz:73,polar:96,noite:37,cores:61,sol:55,ártico:83,estrela:33},clues:['Sou um espetáculo de luzes no céu noturno.','A atividade do Sol ajuda a criar minhas cores.','Perto dos polos, sou chamada de boreal ou austral.']}]},
-{name:'Objeto',description:'Utensílios, ferramentas, roupas, móveis e aparelhos podem ser respostas.',rounds:[
-{answer:'bússola',scores:{norte:86,direção:78,mapa:55,viagem:36,agulha:67,orientação:82,ímã:60,explorador:48,rosa:33,localizar:73},clues:['Sou pequena e ajudo quem não quer se perder.','Uma agulha especial aponta para uma direção.','Exploradores me consultam para encontrar o norte.']},
-{answer:'guarda-chuva',scores:{chuva:94,água:38,proteção:73,tempestade:55,cabo:46,abrir:31,'guarda-sol':80,tempo:27},clues:['Costumo sair de casa quando o céu fica escuro.','Abro acima da cabeça e ajudo a evitar que alguém se molhe.','Meu nome composto começa com “guarda” e termina com “chuva”.']},
-{answer:'caixa d\'água',scores:{reservatório:94,água:65,torneira:55,encanamento:83,recipiente:71,canalização:76,construção:35,chuveiro:47},clues:['Sou um recipiente fixo, geralmente instalado em construções.','Guardo água para que ela possa ser distribuída depois.','Meu nome composto inclui “caixa” e “água”.']}]},
-{name:'Lugar',description:'Cidades, estados, construções e paisagens podem ser palavras secretas.',rounds:[
-{answer:'farol',scores:{mar:51,costa:77,navio:36,luz:85,torre:66,praia:29,navegação:81,noite:42,porto:61,oceano:33},clues:['Fico perto da água e sou visto de longe.','Minha luz ajuda viajantes a encontrar o caminho.','No alto da costa, guio navios durante a noite.']},
-{answer:'São Paulo',scores:{Brasil:91,cidade:74,estado:83,avenida:54,capital:70,paulista:88,metrópole:63,'Minas Gerais':34},clues:['Sou um lugar muito populoso do Brasil.','Meu nome é compartilhado por um estado e sua capital.','Sou a maior cidade brasileira, com o mesmo nome do estado onde fico.']},
-{answer:'Minas Gerais',scores:{Brasil:87,estado:76,montanha:39,ouro:58,'Belo Horizonte':89,paulista:22,café:43,interior:52},clues:['Sou um estado brasileiro conhecido por montanhas e cidades históricas.','Meu nome lembra uma atividade importante na história do Brasil.','Meu nome tem duas palavras: uma indica recursos e outra uma região ampla.']}]}
-];
-const extraScores={
-'biblioteca':{'bibliotecário':72,'bibliotecária':72,'estudo':55,'empréstimo':66,'estudante':42,'livros':86,'prateleira':74,'silêncio':38,'catálogo':81,'leitor':77},
-'amizade':{'amizades':95,'companheiro':88,'companheira':88,'parceria':84,'relação':57,'união':65,'apoio':72,'amizade verdadeira':90,'colega de trabalho':49,'convívio':61},
-'saudade':{'saudades':96,'saudoso':78,'saudosa':78,'falta':84,'lembrar':72,'nostálgico':86,'nostálgica':86,'longe':63,'querido':57,'reminiscência':81},
-'felino':{'felinos':96,'gato selvagem':91,'jaguar':89,'onça':90,'puma':87,'lince':89,'leopardo':92,'garras':51,'predador':68,'bigodes':54},
-'aracnídeo':{'aracnídeos':97,'aracnídea':94,'aranhas':91,'escorpiões':88,'oito patas':81,'invertebrado':66,'invertebrados':68,'teia de aranha':85,'venenoso':52,'venenosa':52},
-'canino':{'caninos':96,'cães':93,'cachorros':91,'cachorra':88,'raposas':77,'lobos':94,'lobo-guará':88,'família':52,'focinho':64,'matilha':77},
-'tomate':{'tomates':96,'tomatinho':90,'tomateiro':84,'ketchup':76,'extrato':62,'polpa':73,'hortaliça':68,'hortaliças':68,'fruto':53,'molho de tomate':90},
-'canela':{'canela em pó':96,'canela em pau':94,'pau de canela':93,'aromatizante':74,'condimento':84,'condimentos':84,'biscoito':49,'bolo':55,'chocolate':40,'açúcar mascavo':61},
-'pé de moleque':{'pé-de-moleque':96,'pé de moleques':95,'doce de amendoim':94,'amendoim torrado':87,'rapadura':82,'festa junina':91,'arraial':71,'paçoca':90,'cristalizado':50,'doce brasileiro':84},
-'vulcão':{'vulcões':96,'magma':95,'magma terrestre':87,'vulcânico':84,'vulcânica':84,'vulcanismo':92,'montanha de fogo':90,'gases':53,'erupções':97,'rocha derretida':91},
-'cachoeira':{'cachoeiras':96,'cascata':94,'cascatas':94,'queda d’água':95,'queda d\'água':95,'salto':75,'rio':61,'rio caudaloso':68,'água corrente':78,'cânion':53},
-'aurora':{'aurora boreal':98,'aurora austral':97,'auroras':96,'luzes do norte':92,'luzes polares':95,'magnetosfera':59,'polo norte':67,'polo sul':62,'fenômeno luminoso':79,'céu colorido':68},
-'bússola':{'bússolas':96,'bússola magnética':97,'bússola de navegação':96,'orientar':77,'navegador':59,'pontos cardeais':82,'ponto cardeal':78,'nordeste':62,'cartografia':71,'instrumento':42},
-'guarda-chuva':{'guarda-chuvas':96,'guarda chuva':95,'sombrinha':91,'capa de chuva':83,'impermeável':68,'molhar':55,'temporal':63,'proteção contra chuva':87,'abrigo':42,'pingos':39},
-'caixa d\'água':{'caixa de água':97,'caixas d\'água':96,'reservatório de água':98,'tanque':85,'tanque de água':94,'abastecimento':74,'encanamento':89,'cisterna':76,'hidrômetro':43,'torneira':61},
-'farol':{'faróis':96,'farol marítimo':96,'farol costeiro':91,'farol de navegação':95,'sinal luminoso':85,'sinalização':66,'navegar':71,'marinheiro':50,'litoral':79,'feixe de luz':88},
-'São Paulo':{'sao paulo':100,'capital paulista':96,'cidade de são paulo':99,'estado de são paulo':94,'paulistanos':85,'paulistanas':85,'sudeste':63,'avenida paulista':95,'brasil':74,'metropolitana':66},
-'Minas Gerais':{'minas gerais':100,'mineiro':93,'mineira':93,'mineiros':93,'mineiras':93,'estado mineiro':94,'belo horizonte':91,'ouro preto':88,'mineração':84,'mineração de ouro':89,'sudeste':58}
+const API_BASE = 'https://palavra-secreta-api.davisouza-eoab.workers.dev';
+const STORAGE_ID = 'palavra-secreta-player-v1';
+const el = {
+  categories: document.querySelector('#categories'), roundTabs: document.querySelector('#roundTabs'),
+  description: document.querySelector('#description'), form: document.querySelector('#form'),
+  input: document.querySelector('#guess'), submit: document.querySelector('#form button[type="submit"]'),
+  hint: document.querySelector('#hintButton'), hintBalance: document.querySelector('#hintBalance'),
+  attempts: document.querySelector('#attempts'), clues: document.querySelector('#clues'),
+  guesses: document.querySelector('#guesses'), toast: document.querySelector('#toast'),
 };
-puzzles.forEach(category=>category.rounds.forEach(round=>Object.assign(round.scores,extraScores[round.answer]||{})));const tipRequirements=[{total:30,since:0},{total:90,since:40},{total:180,since:60}],dailyTipLimit=7,categoryTipLimit=3,storageKey='palavra-secreta-tabs-v1';
-const el={categories:document.querySelector('#categories'),roundTabs:document.querySelector('#roundTabs'),description:document.querySelector('#description'),form:document.querySelector('#form'),input:document.querySelector('#guess'),submit:document.querySelector('#form button[type="submit"]'),hint:document.querySelector('#hintButton'),hintBalance:document.querySelector('#hintBalance'),attempts:document.querySelector('#attempts'),clues:document.querySelector('#clues'),guesses:document.querySelector('#guesses'),toast:document.querySelector('#toast')};
-const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
-const blankDay=()=>({date:today(),tips:dailyTipLimit,spent:0,correctsSinceSpend:0,categories:{}});
-function loadDay(){try{const data=JSON.parse(localStorage.getItem(storageKey));return data?.date===today()?data:blankDay()}catch{return blankDay()}}
-const day=loadDay();let activeCategory=puzzles[0];
-function newProgress(category){return{solved:0,viewing:0,attempts:0,sinceTip:0,tipsUsed:0,rounds:category.rounds.map(()=>({guesses:[],clues:[]}))}}
-function progress(category=activeCategory){if(!day.categories[category.name])day.categories[category.name]=newProgress(category);return day.categories[category.name]}
-function save(){try{localStorage.setItem(storageKey,JSON.stringify(day))}catch{}}
-function norm(value){return value.trim().normalize('NFC').toLocaleLowerCase('pt-BR').replace(/[’‘]/g,"'").replace(/[‐‑‒–—−]/g,'-').replace(/\s+/g,' ')}
-function key(value){return norm(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
-function renderCategories(){el.categories.innerHTML=puzzles.map((category,index)=>`<button class="tab" role="tab" aria-selected="${index===0}" data-index="${index}">${category.name}</button>`).join('');el.categories.querySelectorAll('.tab').forEach(button=>button.addEventListener('click',()=>selectCategory(Number(button.dataset.index))))}
-function selectCategory(index){activeCategory=puzzles[index];const state=progress();state.viewing=Math.min(state.viewing,state.solved,2);el.categories.querySelectorAll('.tab').forEach((tab,i)=>{tab.setAttribute('aria-selected',String(i===index))});el.description.textContent=activeCategory.description;render()}
-function renderRoundTabs(){const state=progress();el.roundTabs.innerHTML=activeCategory.rounds.map((round,index)=>{const done=index<state.solved,selected=index===state.viewing,locked=index>state.solved,label=done?round.answer:String(index+1),accessible=done?`Palavra ${index+1}: ${round.answer}`:`Palavra ${index+1}${locked?' bloqueada':' atual'}`;return`<button class="round-tab ${done?'done':''}" role="tab" aria-selected="${selected}" aria-label="${escapeHtml(accessible)}" title="${done?escapeHtml(round.answer):''}" data-index="${index}" ${locked?'disabled':''}>${escapeHtml(label)}</button>`}).join('');el.roundTabs.querySelectorAll('.round-tab:not(:disabled)').forEach(button=>button.addEventListener('click',()=>{state.viewing=Number(button.dataset.index);save();render()}))}function render(){const state=progress(),view=state.viewing,round=state.rounds[view],isPlayable=view===state.solved&&state.solved<3;renderRoundTabs();el.input.disabled=!isPlayable;el.submit.disabled=!isPlayable;el.input.placeholder=isPlayable?'Digite uma palavra...':'';el.attempts.textContent=`${state.attempts} ${state.attempts===1?'tentativa':'tentativas'}`;el.clues.textContent=round.clues.map((clue,index)=>`${index+1}. ${clue}`).join('\n');el.clues.classList.toggle('show',round.clues.length>0);el.guesses.innerHTML=round.guesses.map(item=>guessRow(item)).join('');if(state.solved===3&&view===2)el.guesses.innerHTML=state.rounds.map((item,index)=>guessRow({word:activeCategory.rounds[index].answer,score:100,label:'Resolvida'})).join('');updateTipButton()}
-function guessRow(item){return`<div class="guess"><span class="word">${escapeHtml(item.word)}</span><span class="proximity">${item.score?`<span class="bar"><span class="fill" style="width:${item.score}%"></span></span><span class="label">${item.label}</span>`:`<span class="label">—</span>`}</span></div>`}
-function updateTipButton(){const state=progress(),index=state.tipsUsed,need=tipRequirements[index];el.hintBalance.textContent=day.tips;let reason='';if(state.viewing!==state.solved||state.solved>=3)reason='Abra a palavra atual para pedir dica.';else if(index>=categoryTipLimit)reason='Limite de dicas desta categoria atingido.';else if(day.tips<=0)reason='As dicas do dia acabaram.';else{const remaining=Math.max(need.total-state.attempts,need.since-state.sinceTip,0);if(remaining)reason=`Faltam ${remaining} tentativas para a próxima dica.`}el.hint.disabled=Boolean(reason);el.hint.title=reason||'Pedir uma dica';el.hint.setAttribute('aria-label',`${reason||'Pedir uma dica'} ${day.tips} disponíveis.`)}
-el.hint.addEventListener('click',()=>{const state=progress(),round=state.rounds[state.viewing],puzzle=activeCategory.rounds[state.viewing];if(el.hint.disabled)return;round.clues.push(puzzle.clues[round.clues.length]);state.tipsUsed++;state.sinceTip=0;day.tips--;day.spent++;save();render()});
-el.form.addEventListener('submit',event=>{event.preventDefault();const state=progress(),round=state.rounds[state.viewing],puzzle=activeCategory.rounds[state.viewing],display=el.input.value.trim().normalize('NFC').replace(/\s+/g,' ');if(!display||el.input.disabled)return;if(!/^[\p{L}\p{M}]+(?:[ '\u2019-][\p{L}\p{M}]+)*$/u.test(display)){notify('Use letras, espaços, hífen ou apóstrofo.');return}if(round.guesses.some(item=>key(item.word)===key(display))){notify('Essa palavra já foi tentada.');return}state.attempts++;state.sinceTip++;const guessed=key(display);if(guessed===key(puzzle.answer)){round.guesses.push({word:display,score:100,label:'Acertou'});state.solved++;state.viewing=state.solved<3?state.solved:2;let refunded=false;if(day.spent>0&&++day.correctsSinceSpend>=2){day.correctsSinceSpend-=2;if(day.tips<dailyTipLimit){day.tips++;refunded=true}}save();render();notify(state.solved===3?'Categoria concluída!'+(refunded?' Uma dica voltou ao seu saldo.':''): 'Acertou! A próxima palavra foi liberada.'+(refunded?' Uma dica voltou ao seu saldo.':''));el.input.value='';return}const found=Object.entries(puzzle.scores).find(([word])=>key(word)===guessed);round.guesses.push({word:display,score:found?.[1]||0,label:found?scoreLabel(found[1]):'—'});round.guesses.sort((a,b)=>b.score-a.score);save();render();el.input.value='';el.input.focus()});
-function scoreLabel(score){return score>=85?'Quase lá':score>=60?'Perto':score>=35?'Aquecendo':'Distante'}
-function escapeHtml(value){return value.replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
-let toastTimer;function notify(message){el.toast.textContent=message;el.toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.toast.classList.remove('show'),2400)}
-renderCategories();selectCategory(0);
+function playerId() {
+  let id = localStorage.getItem(STORAGE_ID);
+  if (!id) { id = crypto.randomUUID(); localStorage.setItem(STORAGE_ID, id); }
+  return id;
+}
+const player = playerId();
+let categories = [], activeCategory = null, activeState = null, viewing = 0, busy = false, toastTimer;
+async function api(path, body) {
+  if (!API_BASE) throw new Error('A API ainda não foi configurada neste site.');
+  const response = await fetch(`${API_BASE}${path}`, {
+    method: body ? 'POST' : 'GET',
+    headers: body ? { 'Content-Type': 'application/json' } : {},
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || 'Não foi possível acessar o jogo.');
+  return data;
+}
+function escapeHtml(value) { return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char])); }
+function key(value) { return value.trim().normalize('NFC').replace(/[’‘]/g,"'").replace(/[‐‑‒–—−]/g,'-').replace(/\s+/g,' ').toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+function notify(message) { el.toast.textContent = message; el.toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.toast.classList.remove('show'), 2600); }
+function currentRound() { return activeState?.rounds?.[viewing] || []; }
+function isPlayable() { return activeState && viewing === activeState.solved && activeState.solved < 3; }
+function answerFor(index) { return activeState?.rounds?.[index]?.find(item => item.correct)?.word; }
+function renderCategories() {
+  el.categories.innerHTML = categories.map((category,index) => `<button class="tab" role="tab" aria-selected="${category.slug === activeCategory.slug}" data-index="${index}">${escapeHtml(category.name)}</button>`).join('');
+  el.categories.querySelectorAll('.tab').forEach(button => button.addEventListener('click', () => selectCategory(Number(button.dataset.index))));
+}
+async function selectCategory(index) {
+  activeCategory = categories[index];
+  viewing = 0;
+  renderCategories();
+  el.description.textContent = activeCategory.description;
+  el.guesses.innerHTML = '';
+  el.clues.textContent = '';
+  el.clues.classList.remove('show');
+  try { activeState = await api(`/api/state?playerId=${encodeURIComponent(player)}&category=${encodeURIComponent(activeCategory.slug)}`); viewing = Math.min(activeState.solved, 2); render(); }
+  catch (error) { activeState = null; render(); notify(error.message); }
+}
+function renderRoundTabs() {
+  el.roundTabs.innerHTML = [0,1,2].map(index => {
+    const done = index < activeState.solved, locked = index > activeState.solved, selected = index === viewing;
+    const answer = done ? answerFor(index) : null;
+    const label = answer || String(index + 1);
+    const accessible = answer ? `Palavra ${index + 1}: ${answer}` : `Palavra ${index + 1}${locked ? ' bloqueada' : ' atual'}`;
+    return `<button class="round-tab ${done ? 'done' : ''}" role="tab" aria-selected="${selected}" aria-label="${escapeHtml(accessible)}" title="${answer ? escapeHtml(answer) : ''}" data-index="${index}" ${locked ? 'disabled' : ''}>${escapeHtml(label)}</button>`;
+  }).join('');
+  el.roundTabs.querySelectorAll('.round-tab:not(:disabled)').forEach(button => button.addEventListener('click', () => { viewing = Number(button.dataset.index); render(); }));
+}
+function guessRow(item) {
+  const score = Number(item.score) || 0;
+  return `<div class="guess"><span class="word">${escapeHtml(item.word)}</span><span class="proximity">${score ? `<span class="bar"><span class="fill" style="width:${score}%"></span></span><span class="label">${escapeHtml(item.label)}</span>` : '<span class="label">—</span>'}</span></div>`;
+}
+function updateHintButton() {
+  const need = [{total:30,since:0},{total:90,since:40},{total:180,since:60}][activeState.tipsUsed];
+  el.hintBalance.textContent = activeState.tips;
+  let reason = '';
+  if (!isPlayable()) reason = 'Abra a palavra atual para pedir dica.';
+  else if (activeState.tipsUsed >= 3) reason = 'Limite de dicas desta categoria atingido.';
+  else if (activeState.tips <= 0) reason = 'As dicas do dia acabaram.';
+  else {
+    const remaining = Math.max(need.total - activeState.attempts, need.since - activeState.sinceTip, 0);
+    if (remaining) reason = `Faltam ${remaining} tentativas para a próxima dica.`;
+  }
+  el.hint.disabled = busy || Boolean(reason);
+  el.hint.title = reason || 'Pedir uma dica';
+  el.hint.setAttribute('aria-label', `${reason || 'Pedir uma dica'} ${activeState.tips} disponíveis.`);
+}
+function render() {
+  if (!activeState) {
+    el.input.disabled = true; el.submit.disabled = true; el.hint.disabled = true;
+    el.attempts.textContent = ''; el.guesses.innerHTML = ''; el.roundTabs.innerHTML = '';
+    return;
+  }
+  renderRoundTabs();
+  const playable = isPlayable();
+  el.input.disabled = busy || !playable; el.submit.disabled = busy || !playable;
+  el.input.placeholder = playable ? 'Digite uma palavra...' : '';
+  el.attempts.textContent = `${activeState.attempts} ${activeState.attempts === 1 ? 'tentativa' : 'tentativas'}`;
+  el.clues.textContent = (activeState.clues?.[viewing] || []).map((clue,index) => `${index + 1}. ${clue}`).join('\n');
+  el.clues.classList.toggle('show', Boolean(activeState.clues?.[viewing]?.length));
+  el.guesses.innerHTML = currentRound().map(guessRow).join('');
+  updateHintButton();
+}
+async function refreshState() {
+  activeState = await api(`/api/state?playerId=${encodeURIComponent(player)}&category=${encodeURIComponent(activeCategory.slug)}`);
+  render();
+}
+el.form.addEventListener('submit', async event => {
+  event.preventDefault();
+  const display = el.input.value.trim().normalize('NFC').replace(/\s+/g,' ');
+  if (!display || !isPlayable() || busy) return;
+  if (!/^[\p{L}\p{M}]+(?:[ '\u2019-][\p{L}\p{M}]+)*$/u.test(display)) { notify('Use letras, espaços, hífen ou apóstrofo.'); return; }
+  if (currentRound().some(item => key(item.word) === key(display))) { notify('Essa palavra já foi tentada.'); return; }
+  busy = true; render();
+  try {
+    const result = await api('/api/guess', { playerId: player, category: activeCategory.slug, round: activeState.solved, word: display });
+    await refreshState();
+    if (result.correct) { viewing = Math.min(activeState.solved, 2); render(); }
+    el.input.value = '';
+    if (result.correct) notify(activeState.solved === 3 ? 'Categoria concluída!' : 'Acertou! A próxima palavra foi liberada.');
+  } catch (error) { notify(error.message); }
+  finally { busy = false; render(); if (isPlayable()) el.input.focus(); }
+});
+el.hint.addEventListener('click', async () => {
+  if (el.hint.disabled || busy) return;
+  busy = true; render();
+  try {
+    const result = await api('/api/hint', { playerId: player, category: activeCategory.slug });
+    await refreshState();
+    notify('Dica revelada.');
+  } catch (error) { notify(error.message); }
+  finally { busy = false; render(); }
+});
+async function start() {
+  try {
+    const config = await api('/api/config');
+    categories = config.categories.map(category => ({...category, rounds: [0,1,2]}));
+    if (!categories.length) throw new Error('Ainda não há categorias cadastradas.');
+    await selectCategory(0);
+  } catch (error) { notify(error.message); }
+}
+start();
 </script>
 </body>
 </html>
